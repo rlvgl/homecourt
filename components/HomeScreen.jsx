@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Text, Heading, Box, Input, FormControl, Stack, VStack, Center } from 'native-base'
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 
-import { app, db } from '../App'
+import { app, db } from '../firebase'
 import { addDoc, collection, setDoc, doc } from 'firebase/firestore'
 import LoginOption from './LoginOption'
 import HomeContent from './HomeContent'

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Box, Text, Heading, VStack, HStack, Center, Skeleton, FormControl, Input, Button, Link, Stack } from 'native-base'
 
 import { doc, getDoc, collection, query, where, getDocs, setDoc } from 'firebase/firestore'
-import { db, app } from '../App'
+import { db, app } from '../firebase'
 import { getAuth } from 'firebase/auth'
 
 

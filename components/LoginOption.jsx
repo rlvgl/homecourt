@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Text, Heading, Box, Input, FormControl, Stack, VStack, Center, Link, HStack } from 'native-base'
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 
-import { app, db } from '../App'
+import { app, db } from '../firebase'
 import { addDoc, collection, setDoc, doc } from 'firebase/firestore'
 import { navigateToProfile } from '../utils'
 
@@ -65,7 +65,7 @@ export default LoginOption = ({ setUser, navigation }) => {
                 <Center w="64" h="20" />
 
                 <Center>
-                    <Heading size="2xl">HomeCourt🏀</Heading>
+                    <Heading size="2xl">HomeCourt 🏀</Heading>
 
                     <Center w="20" h='1' />
 
