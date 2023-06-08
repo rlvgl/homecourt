@@ -17,7 +17,6 @@ export default LoginOption = ({ setUser, navigation }) => {
     const handleAuth = () => {
         signInWithEmailAndPassword(auth, email, password)
             .then(result => {
-                //! figure out how profile navigation is going to work and why it is necesary
                 // navigateToProfile(navigation, result.user.email, result.userUid, result.user)
 
             })
@@ -32,7 +31,7 @@ export default LoginOption = ({ setUser, navigation }) => {
                         const autoUsername = "Guest#" + (Math.random().toString(36).substring(2, 10)).toString()
                         setDoc(userRef, {
                             isInfluencer: false,
-                            name: "Anonymous User",
+                            name: "Anonymous Hooper",
                             bio: "Hi! I am a HomeCourt user",
                             timeCreated: new Date(),
                             lastUpdated: new Date(),

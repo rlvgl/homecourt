@@ -2,24 +2,47 @@ import React, { useState, useEffect } from 'react'
 import { Divider, Box, Text, Heading, VStack, HStack, Center, Skeleton, FormControl, Spinner, InputGroup, Input, InputLeftAddon, Button, TextArea, Link, Stack, Flex, Spacer, Avatar, Select } from 'native-base'
 
 import { doc, getDoc, collection, query, where, getDocs, setDoc } from 'firebase/firestore'
-import { db, app } from '../../firebase'
+import { db, app, storage } from '../../firebase'
 import { getAuth } from 'firebase/auth'
+import { ref, getStorage, uploadBytes, getDownloadURL, listAll } from 'firebase/storage'
 
+import * as ImagePicker from 'expo-image-picker'
+import ProfileHero from './ProfileHero'
+
+import { monthMapper, getAvatarInitials } from '../../utils'
 
 /* 
 THINGS:
 *- WHY DOESNT AVATAR WORK ?????
 *- ADD SKELETON TO PROFILE
 *- make profile edits straight on instead of new form
-!- Make avatar based on name split on space and taken first initial
+*- Make avatar based on name split on space and taken first initial
+!- Banner ?
+
+
+
+Big Work: 
+- make dark mode and general theming
 
 */
 
 export default ProfileScreen = ({ navigation, route }) => {
+
+    // ? for when including auth
+    const auth = getAuth(app)
+    const userEmail = auth.currentUser.email
+    const userId = auth.currentUser.uid
+
+    //? for development: mike@hotmail.com
+    // const userEmail = "mike@hotmaIL.COM"
+    // const userId = "UZ2v0yK8QtOTxH8qlIr3cWeKrPw2"
+
+    // profile page state
     const [loadingUser, setLoadingUser] = useState(true)
     const [inEditMode, setInEditMode] = useState(false)
     const [error, setError] = useState("")
 
+    // firestore vars
     const [user, setUser] = useState({})
     const [name, setName] = useState(user.name)
     const [email, setEmail] = useState(user.email)
@@ -28,29 +51,44 @@ export default ProfileScreen = ({ navigation, route }) => {
     const [dateCreated, setDateCreated] = useState("")
     const [highestLevel, setHighestLevel] = useState("")
 
-    const monthMapper = {
-        "01": "January",
-        "02": "February",
-        "03": "March",
-        "04": "April",
-        "05": "May",
-        "06": "June",
-        "07": "July",
-        "08": "August",
-        "09": "September",
-        "10": "October",
-        "11": "November",
-        "12": "December"
+    // storage vars
+    const photoUri = `images/${userId}/profile/profilePicture`
+    const [profilePictureURL, setProfilePictureURL] = useState("")
+
+    const getUserProfilePicture = async () => {
+        const storage = getStorage()
+        const storageRef = ref(storage, photoUri)
+        getDownloadURL(storageRef).then(url => {
+            setProfilePictureURL(url)
+        }).catch(e => { return }) // expecting error not found for new users
     }
 
-    // ? for when including auth
-    const auth = getAuth(app)
-    const userEmail = auth.currentUser.email
-    const userId = auth.currentUser.uid
 
-    //? for development: mike@hotmail.com
-    // const userEmail = "mike@hotmail.com"
-    // const userId = "UZ2v0yK8QtOTxH8qlIr3cWeKrPw2"
+    const changeProfilePicture = async () => {
+
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            // aspect: [4, 3],
+            quality: 0.1,
+        });
+
+        if (result.canceled) {
+            return
+        }
+
+        const storage = getStorage()
+        const storageRef = ref(storage, photoUri)
+
+        const img = await fetch(result.assets[0].uri)
+        const bytes = await img.blob()
+
+        await uploadBytes(storageRef, bytes)
+        await getUserProfilePicture()
+        setInEditMode(false)
+    }
+
+
 
     // to add new user info: getUser, validateUserChangesAreValid, submitUserChanges, cancelChanges
     // AND CREATEUSERWITHEMAILANDPASSWORD IN LOGINOPTION.JSX 
@@ -186,18 +224,14 @@ export default ProfileScreen = ({ navigation, route }) => {
         setUserBio(user.bio)
     }
 
+
+
     useEffect(() => {
         getUser()
+        getUserProfilePicture()
     }, [])
 
-    const getAvatarInitials = () => {
-        const tokens = name.split(" ")
-        let initials = ""
-        tokens.forEach(token => {
-            initials += token[0]
-        })
-        return initials
-    }
+
 
     return (
 
@@ -207,59 +241,28 @@ export default ProfileScreen = ({ navigation, route }) => {
             {
                 !loadingUser &&
 
-                <VStack space={4} minW="100%">
+                <VStack space={4} minW="100%" pt={2} >
 
 
                     {
                         !inEditMode &&
-
-                        <VStack space={3}>
-
-                            {/* Avatar and edit button */}
-                            <Flex direction="row">
-                                < Avatar bg="indigo.500">{getAvatarInitials()}</Avatar>
-                                <Spacer />
-                                <Button size="sm" variant="link" onPress={() => setInEditMode(true)} colorScheme="indigo" >Edit Profile</Button>
-                            </Flex>
-
-                            {/* Profile headers */}
-                            <Flex direction="row">
-                                <VStack space={1}>
-                                    <Text italic fontSize="md" color="gray.400" >Diamond League</Text>
-                                    <VStack>
-                                        <Heading size="xl">{name} {user.isInfluencer && "🏀"} </Heading>
-                                        <Text color="gray.400" >@{username}</Text>
-                                    </VStack>
-                                </VStack>
-                                <Spacer />
-                            </Flex>
-
-                            <Flex direction="row" >
-                                <Text color="gray.600" >{userBio}</Text>
-                            </Flex>
-
-                            <HStack space={8}>
-                                <Text color="gray.400" italic fontSize="xs">Played {highestLevel}</Text>
-                                <Text color="gray.400" italic fontSize="xs">Joined {monthMapper[dateCreated.slice(5, 7)]} {dateCreated.slice(0, 4)}</Text>
-                            </HStack>
-
-
-                            {/* <Divider orientation="horizontal" /> */}
-
-                        </VStack>
+                        <ProfileHero name={name} isUser={true} username={username} profilePictureURL={profilePictureURL} setInEditMode={setInEditMode} isInfluencer={user.isInfluencer} userBio={userBio} highestLevel={highestLevel} dateCreated={dateCreated} />
                     }
 
 
                     {
                         inEditMode &&
+
                         <VStack space={4}>
 
                             {/* Avatar and edit button */}
                             <Flex direction="row">
-                                < Avatar bg="indigo.500">MJ</Avatar>
+                                < Avatar bg="indigo.500" source={profilePictureURL ? { uri: profilePictureURL } : null}>{getAvatarInitials(name)}</Avatar>
+
                                 <Spacer />
                                 <HStack>
 
+                                    <Button colorScheme="indigo" size="sm" variant="link" onPress={() => changeProfilePicture()}>Choose Image</Button>
                                     <Button colorScheme="indigo" size="sm" variant="link" onPress={() => cancelChanges()}>Cancel Edits</Button>
                                     <Button colorScheme="indigo" size="sm" variant="link" onPress={() => submitUserChanges()}>Save Changes</Button>
                                 </HStack>
@@ -268,7 +271,7 @@ export default ProfileScreen = ({ navigation, route }) => {
                             {/* Profile headers */}
                             <Flex direction="row">
                                 <VStack space={1}>
-                                    <Text italic fontSize="md" color="gray.400" >Diamond League</Text>
+                                    {/* <Text italic fontSize="md" color="gray.400" >Diamond League</Text> */}
                                     <Stack w="100%" space={3} >
                                         <Input size="2xl" width="100%" placeholder={user.name} onChangeText={setName}></Input>
                                         <InputGroup >
@@ -285,7 +288,7 @@ export default ProfileScreen = ({ navigation, route }) => {
                                 <TextArea h="20" w="100%" placeholder={userBio} onChangeText={setUserBio} ></TextArea>
                             </Flex>
 
-                            <HStack space={8}>
+                            <HStack space={8}  >
                                 <Select minW="150" selectedValue={highestLevel} size="sm" onValueChange={val => setHighestLevel(val)} accessibilityLabel={"Highest Level Played"} >
                                     <Select.Item label="None" value="Rec" />
                                     <Select.Item label="HS JV" value="JV" />
@@ -311,58 +314,68 @@ export default ProfileScreen = ({ navigation, route }) => {
 
                         </VStack>
                     }
-                    {/* 
-                    <Divider orientation="horizontal" />
 
-                    <VStack p="3" space={0}>
-                        <Center h={150}>
-                            <Text>Avatar goes here</Text>
-                        </Center>
-                        <Divider />
+                    {/* <Divider />
+
+                    <VStack>
+                        <HStack space={4}>
+                            <Text fontSize="sm" bold underline italic>Stats</Text>
+                            <Divider orientation="vertical" />
+                            <Text fontSize="sm" italic>Friends</Text>
+                            <Divider orientation="vertical" />
+                            <Text fontSize="sm" italic>Recent</Text>
+                        </HStack>
+                    </VStack>
+
+
+                    <VStack space={5}>
+                        <Divider orientation="horizontal" />
+
                         <HStack>
                             <VStack>
-                                <Text fontSize="md" italic>Rating</Text>
-                                <Text fontSize="3xl" bold>1920</Text>
+                                <Text fontSize="xs" italic>Rating</Text>
+                                <Text fontSize="xl" bold>1920</Text>
                             </VStack>
                             <Spacer />
                             <VStack>
                                 <Flex direction="row-reverse">
-                                    <Text fontSize="md" italic>League</Text>
+                                    <Text fontSize="xs" italic>League</Text>
                                 </Flex>
-                                <Text fontSize="3xl" bold>Diamond</Text>
+                                <Text fontSize="xl" color={"darkBlue.400"} bold>Diamond</Text>
                             </VStack>
                         </HStack>
-                        <VStack p="3" space={3}>
 
-                            <HStack>
-                                <VStack>
-                                    <Text fontSize="xs" italic>Games Played</Text>
-                                    <Text fontSize="xl" bold>102</Text>
-                                </VStack>
-                                <Spacer />
-                                <VStack>
-                                    <Flex direction="row-reverse">
-                                        <Text fontSize="xs" italic>1v1 Rating</Text>
-                                    </Flex>
-                                    <Text fontSize="xl" bold>Unrated</Text>
-                                </VStack>
+                        <HStack>
+                            <VStack>
+                                <Text fontSize="xs" italic>Games Played</Text>
+                                <Text fontSize="xl" bold>102</Text>
+                            </VStack>
+                            <Spacer />
+                            <VStack>
+                                <Flex direction="row-reverse">
+                                    <Text fontSize="xs" italic>1v1 Rating</Text>
+                                </Flex>
+                                <Text fontSize="xl" bold>Unrated</Text>
+                            </VStack>
 
-                            </HStack>
-                            <HStack>
-                                <VStack>
-                                    <Text fontSize="xs" italic>Games Won</Text>
-                                    <Text fontSize="xl" bold>62</Text>
-                                </VStack>
-                                <Spacer />
-                                <VStack>
-                                    <Flex direction="row-reverse">
-                                        <Text fontSize="xs" italic>Games Lost</Text>
-                                    </Flex>
+                        </HStack>
+
+                        <HStack>
+                            <VStack>
+                                <Text fontSize="xs" italic>Games Won</Text>
+                                <Text fontSize="xl" bold>62</Text>
+                            </VStack>
+                            <Spacer />
+                            <VStack>
+                                <Flex direction="row-reverse">
+                                    <Text fontSize="xs" italic>Games Lost</Text>
+                                </Flex>
+                                <Flex direction="row-reverse">
                                     <Text fontSize="xl" bold>40</Text>
-                                </VStack>
+                                </Flex>
+                            </VStack>
 
-                            </HStack>
-                        </VStack>
+                        </HStack>
                     </VStack> */}
 
 

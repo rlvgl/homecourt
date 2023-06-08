@@ -128,9 +128,8 @@ export default LocationInfoScreen = ({ navigation, route }) => {
 
 
     return (
-        <Center>
-            <VStack>
-                <Center h='5' w='20' />
+        <Center w="100%" p="5" >
+            <VStack minW="100%" >
 
                 <Heading>{location.name}</Heading>
                 <Text >{location.address}, {location.city}, {location.state}</Text>
