@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Heading, Text, Box, Stack, Center, HStack, VStack, Button, FormControl, Icon, Pressable } from 'native-base'
+import { Heading, Text, Box, Stack, Center, HStack, VStack, Button, Flex, Spacer, FormControl, Icon, Pressable } from 'native-base'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
 
 
@@ -10,6 +10,7 @@ import { db } from '../../firebase'
 
 
 export default HomeContent = ({ navigation, route }) => {
+
     const [selected, setSelected] = useState(1)
     const [gyms, setGyms] = useState([])
 
@@ -43,15 +44,17 @@ export default HomeContent = ({ navigation, route }) => {
     }
 
     return (
-        <Box>
+        <Flex direction="column">
 
 
             <Center h='5' w='20' />
 
-            <Heading>
-                Locations Near You
+            <Flex direction="row">
+                <Heading size="xl" >Locations</Heading>
+                <Spacer />
+                <Button size="sm" variant="link" onPress={() => navigation.navigate("Profile")}>Your Profile</Button>
 
-            </Heading>
+            </Flex>
 
             <Center h='5' w='20' />
 
@@ -101,6 +104,6 @@ export default HomeContent = ({ navigation, route }) => {
 
 
             </VStack>
-        </Box>
+        </Flex>
     )
 }  

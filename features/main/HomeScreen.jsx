@@ -11,6 +11,7 @@ import HomeContent from '../../features/pickup/HomeContent'
 import { navigateToProfile } from '../../utils'
 
 export default HomeScreen = ({ navigation }) => {
+    // navigation.navigate("Profile")
     const [initializing, setInitializing] = useState(true)
     const [user, setUser] = useState();
     const auth = getAuth()

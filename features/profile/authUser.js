@@ -1,0 +1,35 @@
+// const authUser = {
+//     apiKey: "AIzaSyBUJg_-KkEIQXp1lu8CoRY6M5DXYnPQTK0",
+//     appName: "[DEFAULT]",
+//     authDomain: "homecourt-3960e.firebaseapp.com",
+//     currentUser: Object {
+//       _redirectEventId: undefined,
+//       apiKey: "AIzaSyBUJg_-KkEIQXp1lu8CoRY6M5DXYnPQTK0",
+//       appName: "[DEFAULT]",
+//       createdAt: "1685499028051",
+//       displayName: undefined,
+//       email: "mike@hotmail.com",
+//       emailVerified: false,
+//       isAnonymous: false,
+//       lastLoginAt: "1686177206403",
+//       phoneNumber: undefined,
+//      photoURL: undefined,
+//       providerData: Array [
+//         Object {
+//           displayName: null,
+//           email: "mike@hotmail.com",
+//           phoneNumber: null,
+//           "photoURL": null,
+//           "providerId": "password",
+//           "uid": "mike@hotmail.com",
+//         },
+//       ],
+//       "stsTokenManager": Object {
+//         "accessToken": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjU0NWUyNDZjNTEwNmExMGQ2MzFiMTA0M2E3MWJiNTllNWJhMGM5NGQiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vaG9tZWNvdXJ0LTM5NjBlIiwiYXVkIjoiaG9tZWNvdXJ0LTM5NjBlIiwiYXV0aF90aW1lIjoxNjg2MTgzODMyLCJ1c2VyX2lkIjoiVVoydjB5SzhRdE9UeEg4cWxJcjNjV2VLclB3MiIsInN1YiI6IlVaMnYweUs4UXRPVHhIOHFsSXIzY1dlS3JQdzIiLCJpYXQiOjE2ODYxODM4MzIsImV4cCI6MTY4NjE4NzQzMiwiZW1haWwiOiJtaWtlQGhvdG1haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJmaXJlYmFzZSI6eyJpZGVudGl0aWVzIjp7ImVtYWlsIjpbIm1pa2VAaG90bWFpbC5jb20iXX0sInNpZ25faW5fcHJvdmlkZXIiOiJwYXNzd29yZCJ9fQ.SrsFG1EDh-vdUuwx9Bb4TBNRt-fHOmY3LThkKfkJZEwdUn6Tx3f6r919T7YvtbC2zmzByuHinI2gFK7oXFVM8vol4oH8fEJ-IhLPphktIG697QMFzeRTYMKfic1tE4lvOzMTvx35t-Z0cXHnTILoHENfDrYLp6W9AW3jTgywXNv_cxfluwTmUDeHa0hVUtdh0GwCo0SoGxBkF3UbBO8i2rIlvUAz1M5X6VacDPJYW16JZlGTQeGDY64e8F0yx4SVclHC_3f-QOZtpSbpr5RtkuPT1912LKP0oa5AVyM2wuExBNMnLdh1nOyhce_5yA8zaG5JfRSvoLeS9iS4pxI-Hw",
+//         "expirationTime": 1686187432888,
+//         "refreshToken": "APZUo0Q-v-_T5k3JNLY836mx8HaKrYAmE2LOCK9DhHXEHkLCK3IcuydSLmx1iu5fWsWrj66d_duRlZs3do83I0HZydyEqx24VSvrTRyZK4mGMoK43_kfrs4DDqyGm2EXsGQ0wmpKokmrC8jwg7u44ZRGt5bZnIEYJUKV5ZqaExWL2zKu6c_k0grHQRAnUST-FzfNGdznnr7LpMLCm1lBYhfrt9Y-HxUTNw",
+//       },
+//       "tenantId": undefined,
+//       "uid": "UZ2v0yK8QtOTxH8qlIr3cWeKrPw2",
+//     },
+//   }

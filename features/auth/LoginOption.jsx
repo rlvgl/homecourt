@@ -29,9 +29,10 @@ export default LoginOption = ({ setUser, navigation }) => {
 
                         // doc will have id of user auth id and filler name and time created/updated
                         const userRef = doc(db, "users", userUid)
-                        setDoc(userRef, { timeCreated: new Date(), lastUpdated: new Date(), email: email, firstName: "John", lastName: "Doe" })
+                        const autoUsername = "Guest#" + (Math.random().toString(36).substring(2, 10)).toString()
+                        setDoc(userRef, { timeCreated: new Date(), lastUpdated: new Date(), email: email, firstName: "Guest", lastName: "", username: autoUsername })
 
-                        // navigateToProfile(navigation, email, userUid, result.user)
+
 
                     })
                     .catch(err => {

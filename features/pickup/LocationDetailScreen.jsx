@@ -13,7 +13,7 @@ export default LocationInfoScreen = ({ navigation, route }) => {
     // const 
 
     const location = route.params.location
-    const mapsURL = `https://www.google.com/maps?q=${location.address} ${location.city}`.replace(/\s+/g, "+")
+    // const mapsURL = `https://www.google.com/maps?q=${location.address} ${location.city}`.replace(/\s+/g, "+")
     const destination = encodeURIComponent(`${location.address}, ${location.city}`);
     const provider = Platform.OS === 'ios' ? 'apple' : 'google'
     const link = `http://maps.${provider}.com/?daddr=${destination}`;
@@ -82,13 +82,6 @@ export default LocationInfoScreen = ({ navigation, route }) => {
             setActiveAtLocation(true)
             return
         }
-
-        // const q = query(collection(db, "activeUsers"), where("userEmail", "==", auth.currentUser.email))
-        // const querySnapshot = await getDocs(q)
-        // if (querySnapshot.length > 0) {
-        //     setActiveAtLocation(true)
-        //     return
-        // }
 
         const address = location.address
         const joinedAt = new Date()
