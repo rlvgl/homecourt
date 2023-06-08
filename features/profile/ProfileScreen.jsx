@@ -18,13 +18,13 @@ export default ProfileScreen = ({ navigation, route }) => {
     const [inEditMode, setInEditMode] = useState(false)
 
     //? for when including auth
-    // const auth = getAuth(app)
-    // const userEmail = auth.currentUser.email
-    // const userId = auth.currentUser.uid
+    const auth = getAuth(app)
+    const userEmail = auth.currentUser.email
+    const userId = auth.currentUser.uid
 
     //? for development: mike@hotmail.com
-    const userEmail = "mike@hotmail.com"
-    const userId = "UZ2v0yK8QtOTxH8qlIr3cWeKrPw2"
+    // const userEmail = "mike@hotmail.com"
+    // const userId = "UZ2v0yK8QtOTxH8qlIr3cWeKrPw2"
 
 
     const validateUserChangesAreValid = async () => {
