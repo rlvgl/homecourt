@@ -30,7 +30,16 @@ export default LoginOption = ({ setUser, navigation }) => {
                         // doc will have id of user auth id and filler name and time created/updated
                         const userRef = doc(db, "users", userUid)
                         const autoUsername = "Guest#" + (Math.random().toString(36).substring(2, 10)).toString()
-                        setDoc(userRef, { timeCreated: new Date(), lastUpdated: new Date(), email: email, firstName: "Guest", lastName: "", username: autoUsername })
+                        setDoc(userRef, {
+                            isInfluencer: false,
+                            name: "Anonymous User",
+                            bio: "Hi! I am a HomeCourt user",
+                            timeCreated: new Date(),
+                            lastUpdated: new Date(),
+                            email: email,
+                            username: autoUsername,
+                            highestLevel: "Rec",
+                        })
 
 
 

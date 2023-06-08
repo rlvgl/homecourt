@@ -15,6 +15,7 @@ export default AddLocationScreen = ({ location, route }) => {
     const [success, setSuccess] = useState(false)
 
 
+
     const addLocation = async () => {
         if (await verifyData()) {
             //check that doc with same address doesnt exist

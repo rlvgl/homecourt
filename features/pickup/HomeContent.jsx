@@ -44,15 +44,13 @@ export default HomeContent = ({ navigation, route }) => {
     }
 
     return (
-        <Flex direction="column">
+        <Flex direction="column" p="5" >
 
-
-            <Center h='5' w='20' />
 
             <Flex direction="row">
                 <Heading size="xl" >Locations</Heading>
                 <Spacer />
-                <Button size="sm" variant="link" onPress={() => navigation.navigate("Profile")}>Your Profile</Button>
+                <Button size="sm" colorScheme={"indigo"} variant="link" onPress={() => navigation.navigate("Profile")}>Your Profile</Button>
 
             </Flex>
 
@@ -64,16 +62,8 @@ export default HomeContent = ({ navigation, route }) => {
 
                 {
                     gyms.map(gym => {
-                        return <Box alignItems="center" key={gym.name} onPress={() => goToLocationDetailPage(gym)} >
-                            <Box maxW="80" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" _dark={{
-                                borderColor: "coolGray.600",
-                                backgroundColor: "gray.700"
-                            }} _web={{
-                                shadow: 2,
-                                borderWidth: 0
-                            }} _light={{
-                                backgroundColor: "gray.50"
-                            }}>
+                        return <Box alignItems="center" minW="100%" key={gym.name} onPress={() => goToLocationDetailPage(gym)} >
+                            <Box minW="100%" rounded="lg" overflow="hidden" borderColor="coolGray.200" borderWidth="1" >
 
                                 <Stack p="4" space={3}>
                                     <Stack space={2}>
