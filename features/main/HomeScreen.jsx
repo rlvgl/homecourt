@@ -2,11 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Button, Text, Heading, Box, Input, FormControl, Stack, VStack, Center } from 'native-base'
 import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword } from 'firebase/auth'
 
-import { app, db } from '../firebase'
+import { app, db } from '../../firebase'
 import { addDoc, collection, setDoc, doc } from 'firebase/firestore'
-import LoginOption from './LoginOption'
-import HomeContent from './HomeContent'
-import { navigateToProfile } from '../utils'
+// import LoginOption from '../auth/LoginOption'
+import LoginOption from '../../features/auth/LoginOption'
+import HomeContent from '../../features/pickup/HomeContent'
+// import HomeContent from '../../components/HomeContent'
+import { navigateToProfile } from '../../utils'
 
 export default HomeScreen = ({ navigation }) => {
     const [initializing, setInitializing] = useState(true)

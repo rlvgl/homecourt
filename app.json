@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "HomeCourt",
-    "slug": "HomeCourt",
+    "slug": "homecourt",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/basketball_icon.png",
@@ -15,7 +15,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.agrawalsohum.homecourt"
     },
     "android": {
       "adaptiveIcon": {
@@ -25,6 +26,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5b2030a1-e0c3-4769-92ad-4bc6c21b11d4"
+      }
+    },
+    "owner": "realvigil"
   }
 }

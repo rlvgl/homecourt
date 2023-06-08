@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Text, Heading, Center, Button, FormControl, VStack, Box, Stack, Input, Link, HStack } from 'native-base'
 import { collection, addDoc, query, where, getDocs } from 'firebase/firestore'
-import { db } from '../firebase'
+import { db } from '../../firebase'
 
 
 export default AddLocationScreen = ({ location, route }) => {

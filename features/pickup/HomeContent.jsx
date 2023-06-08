@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Heading, Text, Box, Stack, Center, HStack, VStack, Button, FormControl, Icon, Pressable } from 'native-base'
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons'
-import LocationDetailScreen from './LocationDetailScreen'
+
 
 
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore'
-import { db } from '../firebase'
+import { db } from '../../firebase'
 
 
 

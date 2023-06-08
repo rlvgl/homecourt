@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Button, Center, Heading, Text, VStack, HStack, Box } from 'native-base'
 import { Linking, Platform } from 'react-native'
 import { collection, query, where, getDocs, doc, addDoc, deleteDoc } from "firebase/firestore";
-import { db, app } from '../firebase'
+import { db, app } from '../../firebase'
 import { getAuth } from 'firebase/auth'
 
 
@@ -62,7 +62,7 @@ export default LocationInfoScreen = ({ navigation, route }) => {
             // await deleteDoc(doc(db, "activeUsers", data["userId"]))
         })
 
-        // console.log(userIds)
+        // console.log(userIds) 
         userIds.forEach(async d => await deleteDoc(doc(db, "activeUsers", d)))
 
         await setActiveAtLocation(false)
